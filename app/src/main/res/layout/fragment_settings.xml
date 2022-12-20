@@ -29,6 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
             android:textColor="@color/gray"
+            android:textSize="16sp"
             android:text="Manage Groups" />
     </LinearLayout>
 
@@ -54,6 +55,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
             android:textColor="@color/gray"
+            android:textSize="16sp"
             android:text="My Number" />
     </LinearLayout>
 

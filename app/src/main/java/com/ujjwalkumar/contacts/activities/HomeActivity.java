@@ -34,6 +34,11 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mAuth = FirebaseAuth.getInstance();
+        db = FirebaseDatabase.getInstance();
+        ref = db.getReference(mAuth.getUid());
+        ref.keepSynced(true);
+
         binding = ActivityHomeBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         setSupportActionBar(binding.toolbar);
@@ -50,7 +55,6 @@ public class HomeActivity extends AppCompatActivity {
         binding.navView.setSelectedItemId(R.id.navigation_add);
 
         // Add profile pic on Action Bar
-        mAuth = FirebaseAuth.getInstance();
         Glide.with(HomeActivity.this)
                 .load(mAuth.getCurrentUser().getPhotoUrl().toString())
                 .placeholder(R.drawable.ic_baseline_person_24)
@@ -58,10 +62,6 @@ public class HomeActivity extends AppCompatActivity {
                 .into(binding.imageViewProfile);
 
         binding.imageViewProfile.setOnClickListener(view -> startActivity(new Intent(HomeActivity.this, AccountActivity.class)));
-
-        db = FirebaseDatabase.getInstance();
-        ref = db.getReference(mAuth.getUid());
-        ref.keepSynced(true);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if(checkSelfPermission(Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED ||
