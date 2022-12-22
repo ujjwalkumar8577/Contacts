@@ -70,8 +70,37 @@ public class ContactActivity extends AppCompatActivity {
         });
 
         binding.imageViewMessage.setOnClickListener(view -> {
-            SmsManager smsManager = SmsManager.getDefault();
-            smsManager.sendTextMessage(String.valueOf(contact.getNumber()), null, "hi", null, null);
+//            SmsManager smsManager = SmsManager.getDefault();
+//            smsManager.sendTextMessage(String.valueOf(contact.getNumber()), null, "hi", null, null);
+
+            Intent in = new Intent(Intent.ACTION_VIEW);
+            in.setData(Uri.parse("sms:" + contact.getNumber()));
+            in.putExtra("sms_body", "");
+            startActivity(in);
+        });
+
+        binding.imageViewWhatsapp.setOnClickListener(view -> {
+//            Intent intent = new Intent(Intent.ACTION_SEND);
+//            intent.setType("text/plain");
+//            intent.setPackage("com.whatsapp");
+//            intent.putExtra(Intent.EXTRA_TEXT, "hi");
+//
+//            // Checking whether Whatsapp is installed or not
+//            if (intent.resolveActivity(getPackageManager()) == null) {
+//                Toast.makeText(this, "Please install whatsapp first.", Toast.LENGTH_SHORT).show();
+//                return;
+//            }
+//            startActivity(intent);
+
+            Uri uri = Uri.parse("smsto:+91" + contact.getNumber());
+            Intent in = new Intent(Intent.ACTION_SENDTO, uri);
+            in.setPackage("com.whatsapp");
+            if(in.resolveActivity(getPackageManager()) == null)
+                Toast.makeText(this, "Please install whatsapp first.", Toast.LENGTH_SHORT).show();
+            else {
+                startActivity(in);
+                finish();
+            }
         });
 
         binding.imageViewQr.setOnClickListener(view -> {
@@ -90,7 +119,6 @@ public class ContactActivity extends AppCompatActivity {
 
             QRCodeWriter writer = new QRCodeWriter();
             try {
-//                String content = contact.getName() + "#" + contact.getNumber();
                 String content = "tel:" + contact.getNumber();
                 BitMatrix bitMatrix = writer.encode(content, BarcodeFormat.QR_CODE, 512, 512);
                 int width = bitMatrix.getWidth();

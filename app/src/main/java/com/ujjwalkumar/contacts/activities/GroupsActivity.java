@@ -54,7 +54,7 @@ public class GroupsActivity extends AppCompatActivity {
                     for (DataSnapshot data : dataSnapshot.getChildren()) {
                         groups.add(data.getValue(Group.class));
                     }
-                    GroupAdapter adapter = new GroupAdapter(GroupsActivity.this, groups, null);
+                    GroupAdapter adapter = new GroupAdapter(GroupsActivity.this, null, groups, -100);
                     binding.recyclerView.setLayoutManager(new LinearLayoutManager(GroupsActivity.this));
                     binding.recyclerView.setAdapter(adapter);
                 } catch (Exception e) {

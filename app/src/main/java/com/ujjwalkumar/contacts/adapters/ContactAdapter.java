@@ -3,6 +3,7 @@ package com.ujjwalkumar.contacts.adapters;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,22 +58,12 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactV
             return false;
         });
 
-//        holder.layout.setOnTouchListener(new OnSwipeTouchListener(context) {
-//            @Override
-//            public void onSwipeRight() {
-//                Toast.makeText(context, "swipe right", Toast.LENGTH_SHORT).show();
-//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-//                    holder.itemView.setBackgroundColor(context.getColor(R.color.colorAccent));
-//                }
-//            }
-//            @Override
-//            public void onSwipeLeft() {
-//                Toast.makeText(context, "swipe left", Toast.LENGTH_SHORT).show();
-//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-//                    holder.itemView.setBackgroundColor(context.getColor(R.color.colorAccent));
-//                }
-//            }
-//        });
+        holder.layout.setOnClickListener(view -> {
+            Intent in = new Intent();
+            in.setAction(Intent.ACTION_CALL);
+            in.setData(Uri.parse("tel:".concat(String.valueOf(obj.getNumber()))));
+            context.startActivity(in);
+        });
     }
 
     @Override

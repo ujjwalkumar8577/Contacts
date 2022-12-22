@@ -6,12 +6,14 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -39,7 +41,9 @@ public class ContactsFragment extends Fragment {
 
         binding.imageViewClear.setOnClickListener(view -> {
             showData(container.getContext(), "");
+            ((GroupAdapter)binding.recyclerViewHorizontal.getAdapter()).setSelected(-1);
             binding.recyclerViewHorizontal.getAdapter().notifyDataSetChanged();
+            binding.editTextSearch.setText("");
         });
 
         binding.editTextSearch.addTextChangedListener(new TextWatcher() {
@@ -56,7 +60,7 @@ public class ContactsFragment extends Fragment {
             @Override
             public void afterTextChanged(Editable editable) {
                 String filter = editable.toString();
-                showData(container.getContext(), filter);
+                showData(container.getContext(), filter.trim());
             }
         });
 
@@ -68,7 +72,12 @@ public class ContactsFragment extends Fragment {
                     for (DataSnapshot data : dataSnapshot.getChildren()) {
                         groups.add(data.getValue(Group.class));
                     }
-                    resetGroups(container.getContext());
+                    GroupAdapter adapter = new GroupAdapter(container.getContext(), ContactsFragment.this, groups, -1);
+                    binding.recyclerViewHorizontal.setLayoutManager(new LinearLayoutManager(
+                            container.getContext(),
+                            LinearLayoutManager.HORIZONTAL,
+                            false));
+                    binding.recyclerViewHorizontal.setAdapter(adapter);
                 }
                 catch (Exception e) {
                     e.printStackTrace();
@@ -120,15 +129,6 @@ public class ContactsFragment extends Fragment {
         }
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(context));
         binding.recyclerView.setAdapter(adapter);
-    }
-
-    public void resetGroups(Context context) {
-        GroupAdapter adapter = new GroupAdapter(context, groups, ContactsFragment.this);
-        binding.recyclerViewHorizontal.setLayoutManager(new LinearLayoutManager(
-                context,
-                LinearLayoutManager.HORIZONTAL,
-                false));
-        binding.recyclerViewHorizontal.setAdapter(adapter);
     }
 
     @Override

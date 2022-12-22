@@ -71,10 +71,21 @@
         android:layout_height="48dp"
         android:layout_marginTop="24dp"
         android:src="@drawable/ic_baseline_message_24"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/imageViewWhatsapp"
         app:layout_constraintStart_toEndOf="@+id/imageViewCall"
         app:layout_constraintTop_toBottomOf="@+id/textViewNumber"
         app:tint="@color/blue" />
+
+    <ImageView
+        android:id="@+id/imageViewWhatsapp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="24dp"
+        android:src="@drawable/whatsapp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageViewMessage"
+        app:layout_constraintTop_toBottomOf="@+id/textViewNumber"
+        app:tint="@color/green" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -93,6 +104,15 @@
         app:layout_constraintEnd_toEndOf="@+id/imageViewMessage"
         app:layout_constraintStart_toStartOf="@+id/imageViewMessage"
         app:layout_constraintTop_toBottomOf="@+id/imageViewMessage" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="Whatsapp"
+        app:layout_constraintEnd_toEndOf="@+id/imageViewWhatsapp"
+        app:layout_constraintStart_toStartOf="@+id/imageViewWhatsapp"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewWhatsapp" />
 
     <LinearLayout
         android:id="@+id/linearLayout"

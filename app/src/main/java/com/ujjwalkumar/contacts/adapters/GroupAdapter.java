@@ -12,21 +12,23 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ujjwalkumar.contacts.R;
-import com.ujjwalkumar.contacts.models.Group;
 import com.ujjwalkumar.contacts.fragments.ContactsFragment;
+import com.ujjwalkumar.contacts.models.Group;
 
 import java.util.ArrayList;
 
 public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.GroupViewHolder> {
 
     Context context;
-    ArrayList<Group> al;
     ContactsFragment fragment;
+    ArrayList<Group> al;
+    int selected;
 
-    public GroupAdapter(Context context, ArrayList<Group> al, ContactsFragment fragment) {
+    public GroupAdapter(Context context, ContactsFragment fragment, ArrayList<Group> al, int selected) {
         this.context = context;
-        this.al = al;
         this.fragment = fragment;
+        this.al = al;
+        this.selected = selected;
     }
 
     @NonNull
@@ -41,6 +43,11 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.GroupViewHol
         Group obj = al.get(position);
         holder.textViewGroupName.setText(obj.getName());
 
+        if(position==selected)
+            holder.textViewGroupName.setBackground(AppCompatResources.getDrawable(context, R.drawable.bg_input_rounded_accent));
+        else
+            holder.textViewGroupName.setBackground(AppCompatResources.getDrawable(context, R.drawable.bg_input_rounded));
+
         if(fragment==null) {
             ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) holder.layout.getLayoutParams();
             params.width = ViewGroup.MarginLayoutParams.MATCH_PARENT;
@@ -51,8 +58,8 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.GroupViewHol
         }
         else {
             holder.textViewGroupName.setOnClickListener(view -> {
-                fragment.resetGroups(context);
-                holder.textViewGroupName.setBackground(AppCompatResources.getDrawable(context, R.drawable.bg_input_rounded_accent));
+                selected = holder.getAdapterPosition();
+                notifyDataSetChanged();
                 fragment.showData(context, obj.getName());
             });
         }
@@ -61,6 +68,10 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.GroupViewHol
     @Override
     public int getItemCount() {
         return al.size();
+    }
+
+    public void setSelected(int selected) {
+        this.selected = selected;
     }
 
     public static class GroupViewHolder extends RecyclerView.ViewHolder {

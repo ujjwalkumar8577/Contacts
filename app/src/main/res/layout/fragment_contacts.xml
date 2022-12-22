@@ -4,13 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
     tools:context=".fragments.ContactsFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewHorizontal"
         android:layout_width="0dp"
         android:layout_height="36dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         app:layout_constraintEnd_toStartOf="@+id/imageViewClear"
@@ -31,6 +31,7 @@
         android:id="@+id/editTextSearch"
         android:layout_width="0dp"
         android:layout_height="50dp"
+        android:layout_margin="16dp"
         android:background="@drawable/bg_input_rounded"
         android:drawableStart="@drawable/ic_baseline_person_search_24"
         android:drawablePadding="8dp"
@@ -47,6 +48,7 @@
         android:id="@+id/imageViewClear"
         android:layout_width="36dp"
         android:layout_height="36dp"
+        android:layout_marginEnd="16dp"
         android:src="@drawable/ic_baseline_clear_24"
         app:tint="@color/gray"
         android:contentDescription="filter by group"
